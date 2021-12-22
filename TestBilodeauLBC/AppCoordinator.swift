@@ -10,7 +10,7 @@ import UIKit
 
 class AppCoordinator {
     
-    let navigationController: UINavigationController
+    private let navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -23,14 +23,33 @@ class AppCoordinator {
 }
 
 extension AppCoordinator: OffersViewControllerDelegate {
-
+    
     private func presentOffersViewController() {
         let vc = OffersViewController(with: OffersViewModel())
+        
+        vc.delegate = self
         
         self.navigationController.pushViewController(vc, animated: false)
     }
     
-    func didSelectOffer(_ offer: Offer) {
-        let viewModel = OfferDetailsViewModel(from: offer)
+    func didSelectOffer(_ offer: Offer, ofCategory category: Category) {
+        let viewModel = OfferDetailsViewModel(from: offer, ofCategory: category)
+        
+        self.presentOfferDetails(withModel: viewModel)
+    }
+}
+
+extension AppCoordinator: OfferDetailsViewControllerDelegate {
+    
+    private func presentOfferDetails(withModel model: OfferDetailsViewModel) {
+        let vc = OfferDetailsViewController(with: model)
+        vc.delegate = self
+        
+        self.navigationController.pushViewController(vc, animated: true)
+    }
+    
+    
+    func didTapCloseButton() {
+        self.navigationController.popViewController(animated: true)
     }
 }

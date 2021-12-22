@@ -38,6 +38,8 @@ class OffersViewModel: ObservableObject {
             self.setupDataSource(from: self.offers)
         }
     }
+    // Not sure about the best practices when it comes to passing data back to the view
+    @Published private(set) var offerToDetail: (Offer, Category)?
     
     private var offers: [Offer] {
         didSet {
@@ -109,6 +111,18 @@ class OffersViewModel: ObservableObject {
         self.categoryFilter = category
     }
     
+    func didSelectItem(atIndex index: Int) {
+        guard index < self.dataSource.count else {
+            return
+        }
+        
+        let offer = self.dataSource[index]
+        
+        if let category = self.categories.first(where: { $0.id == offer.categoryId }) {
+            self.offerToDetail = (offer, category)
+        }
+    }
+    
     // This prevents reused cells from stacking up multiple datatasks from unrelated offers
     // Note that glitches still remain with the image loading when network conditions are poor
     func cellDidDisappear(_ cell: OfferCell) {
@@ -121,6 +135,10 @@ class OffersViewModel: ObservableObject {
     
     func filterDeletionButtonPressed() {
         self.categoryFilter = nil
+    }
+    
+    func viewDidAppear() {
+        self.fetchAll()
     }
     
     // MARK: - Data source

@@ -24,11 +24,19 @@ struct APIClient: Requestable {
         case underlying(Error)
     }
     
+    var session: URLSession = {
+        
+        let config = URLSessionConfiguration.default
+        config.requestCachePolicy = .reloadIgnoringCacheData
+        let session = URLSession(configuration: config)
+        return session
+    }()
+    
     func make<T: Decodable>(
         _ request: URLRequest,
         _ decoder: JSONDecoder
     ) -> AnyPublisher<T, Error> {
-        URLSession.shared
+        self.session
             .dataTaskPublisher(for: request)
             .tryMap { response in
                 

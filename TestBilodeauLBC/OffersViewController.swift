@@ -9,19 +9,28 @@ import UIKit
 import Combine
 
 protocol OffersViewControllerDelegate: AnyObject {
-    func didSelectOffer(_: Offer)
+    func didSelectOffer(_: Offer, ofCategory: Category)
 }
 
 class OffersViewController: UIViewController {
 
     let viewModel: OffersViewModel
     
+    weak var delegate: OffersViewControllerDelegate?
+    
     private var subscriptions = Set<AnyCancellable>()
     
-    // Views
+    private var filterPickerData: FilterPickerData?
+    
+    // MARK: - Views
     
     private let filterLabel: UILabel = {
         let label = UILabel()
+        
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+        
+        label.isUserInteractionEnabled = true
         
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -29,21 +38,16 @@ class OffersViewController: UIViewController {
     
     private let categoryPickerView: UILabel = {
         let label = UILabel()
-        
+
         label.text = "Categories"
         label.font = .boldSystemFont(ofSize: 17)
         label.textAlignment = .center
-        
+
         label.layer.cornerRadius = 15
         label.layer.borderWidth = 1
         label.layer.borderColor = UIColor.black.cgColor
         label.layer.masksToBounds = true
-        
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(categoryPickerTapped))
-//
-//        label.addGestureRecognizer(tapGesture)
-//        label.isUserInteractionEnabled = true
-        
+
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -115,7 +119,7 @@ class OffersViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.viewModel.fetchAll()
+        viewModel.viewDidAppear()
     }
     
     // MARK: - Initializers
@@ -126,6 +130,7 @@ class OffersViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.view.backgroundColor = .white
+        self.overrideUserInterfaceStyle = .light
     }
     
     required init?(coder: NSCoder) {
@@ -139,7 +144,7 @@ class OffersViewController: UIViewController {
     private func setCategoryPickerTapGesture() {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(categoryPickerTapped))
-        
+
         self.categoryPickerView.addGestureRecognizer(tapGesture)
         self.categoryPickerView.isUserInteractionEnabled = true
     }
@@ -149,15 +154,16 @@ class OffersViewController: UIViewController {
     private func bind() {
         
         self.viewModel.$categories.sink { categories in
-            print("categories, count = \(categories.count)")
+            self.filterPickerData = FilterPickerData(categories: categories)
         }.store(in: &self.subscriptions)
         
         self.viewModel.$dataSource.sink { [weak self] offers in
-            print("offers: count = \(offers.count)")
             self?.offersCollectionView.reloadData()
         }.store(in: &self.subscriptions)
         
         self.viewModel.$isLoading.sink { isLoading in
+            
+            self.setUIFrozenState(isLoading)
             if isLoading {
                 self.activityIndicator.startAnimating()
             } else {
@@ -173,6 +179,12 @@ class OffersViewController: UIViewController {
             }
             
             self?.filterLabel.isHidden = (filter == nil)
+        }.store(in: &self.subscriptions)
+        
+        self.viewModel.$offerToDetail.sink { [weak self] tuple in
+            if let tuple = tuple {
+                self?.delegate?.didSelectOffer(tuple.0, ofCategory: tuple.1)
+            }
         }.store(in: &self.subscriptions)
     }
     
@@ -199,9 +211,17 @@ class OffersViewController: UIViewController {
         self.view.addSubview(self.filterLabel)
         NSLayoutConstraint.activate([
             self.filterLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0),
-            self.filterLabel.trailingAnchor.constraint(greaterThanOrEqualTo: self.categoryPickerView.leadingAnchor, constant: 15.0),
+            self.filterLabel.trailingAnchor.constraint(equalTo: self.categoryPickerView.leadingAnchor, constant: -15.0),
             self.filterLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.filterLabel.heightAnchor.constraint(equalToConstant: 40.0)
+        ])
+        
+        self.filterLabel.addSubview(self.deleteButton)
+        NSLayoutConstraint.activate([
+            self.deleteButton.centerYAnchor.constraint(equalTo: self.filterLabel.centerYAnchor),
+            self.deleteButton.trailingAnchor.constraint(equalTo: self.filterLabel.trailingAnchor),
+            self.deleteButton.heightAnchor.constraint(equalToConstant: 30.0),
+            self.deleteButton.widthAnchor.constraint(equalToConstant: 30.0),
         ])
         
         self.view.addSubview(self.offersCollectionView)
@@ -228,13 +248,46 @@ class OffersViewController: UIViewController {
         self.viewModel.refreshControlDidTrigger()
     }
     
-    @objc func filterDeletionButtonPressed(_ sender: UIButton!) {
+    @objc func filterDeletionButtonPressed(_ sender: UIButton) {
         
         viewModel.filterDeletionButtonPressed()
     }
     
     @objc func categoryPickerTapped() {
         
+        guard let filterPickerData = self.filterPickerData else {
+            return
+        }
+                
+        let vc = FilterPicker(with: filterPickerData)
+        
+        vc.delegate = self
+        vc.modalPresentationStyle = .overFullScreen
+        
+        self.present(vc, animated: true)
+    }
+    
+    // MARK: - Misc
+    
+    private func setUIFrozenState(_ frozen: Bool) {
+        self.filterLabel.isUserInteractionEnabled = !frozen
+        self.categoryPickerView.isUserInteractionEnabled = !frozen
+        self.offersCollectionView.isUserInteractionEnabled = !frozen
+    }
+}
+
+
+// MARK: - FilterPickerDelegate
+
+extension OffersViewController: FilterPickerDelegate {
+    
+    func didPickCategory(_ category: Category?) {
+        
+        guard let category = category else {
+            return
+        }
+        
+        viewModel.didSelectCategoryFilter(category)
     }
 }
 
@@ -266,6 +319,10 @@ extension OffersViewController: UICollectionViewDelegateFlowLayout, UICollection
         let width = (collectionView.bounds.width - 30) / 2
         
         return CGSize(width: width, height: 300.0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.viewModel.didSelectItem(atIndex: indexPath.row)
     }
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

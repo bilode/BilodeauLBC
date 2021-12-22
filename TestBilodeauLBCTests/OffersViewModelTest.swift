@@ -59,11 +59,11 @@ class OffersViewModelTest: XCTestCase {
         return OffersViewModel(with: offersRepository, categoriesRepository)
     }
 
-    func testDataSourceUpdateNoFilter() throws {
+    func testFetchingNoFilter() throws {
         
         let viewModel = self.createDefaultViewModel()
         
-        var expectation = self.expectation(description: "noFilter")
+        let expectation = self.expectation(description: "fetch_no_filter")
         var cancellable: AnyCancellable
 
         cancellable = viewModel.$dataSource
@@ -84,10 +84,17 @@ class OffersViewModelTest: XCTestCase {
         waitForExpectations(timeout: 1.0)
         cancellable.cancel()
         
-        expectation = self.expectation(description: "filter1")
+    }
+    
+    func testFetchingAfterFiltering() throws {
+        
+        let viewModel = self.createDefaultViewModel()
+        
+        var expectation = self.expectation(description: "fetch_filter_1")
+        var cancellable: AnyCancellable
         
         viewModel.didSelectCategoryFilter(Category(id: 1, name: ""))
-
+        
         cancellable = viewModel.$dataSource
             .dropFirst()
             .sink { offers in
@@ -100,17 +107,17 @@ class OffersViewModelTest: XCTestCase {
                 
                 expectation.fulfill()
             }
-                
+        
         viewModel.fetchAll()
         
         waitForExpectations(timeout: 1.0)
         cancellable.cancel()
         
         
-        expectation = self.expectation(description: "filter2")
-
+        expectation = self.expectation(description: "fetch_filter_2")
+        
         viewModel.didSelectCategoryFilter(Category(id: 2, name: ""))
-
+        
         cancellable = viewModel.$dataSource
             .dropFirst()
             .sink { offers in
@@ -122,11 +129,47 @@ class OffersViewModelTest: XCTestCase {
                 
                 expectation.fulfill()
             }
-
+        
         viewModel.fetchAll()
-
+        
         waitForExpectations(timeout: 1.0)
         cancellable.cancel()
+    }
+    
+    func testFetchingBeforeFiltering() throws {
+        let viewModel = self.createDefaultViewModel()
+        
+        let expectation = self.expectation(description: "fetchAll")
+        var cancellable: AnyCancellable
+
+        cancellable = viewModel.$dataSource
+            .dropFirst()
+            .sink { offers in
+                expectation.fulfill()
+            }
+                
+        viewModel.fetchAll()
+        
+        waitForExpectations(timeout: 1.0)
+        cancellable.cancel()
+        
+        viewModel.didSelectCategoryFilter(Category(id: 1, name: ""))
+        
+        XCTAssertEqual(viewModel.dataSource.count, 6)
+        XCTAssertEqual(viewModel.dataSource.map{$0.isUrgent}, [true, true, true, true, false, false])
+        XCTAssertEqual(viewModel.dataSource.map{$0.description}, ["3", "5", "1", "0", "4", "2"])
+        
+        viewModel.didSelectCategoryFilter(Category(id: 2, name: ""))
+        
+        XCTAssertEqual(viewModel.dataSource.count, 4)
+        XCTAssertEqual(viewModel.dataSource.map{$0.isUrgent}, [true, false, false, false])
+        XCTAssertEqual(viewModel.dataSource.map{$0.description}, ["8", "6", "7", "9"])
+        
+        viewModel.didSelectCategoryFilter(Category(id: 3, name: ""))
+        
+        XCTAssertEqual(viewModel.dataSource.count, 1)
+        XCTAssertEqual(viewModel.dataSource.map{$0.isUrgent}, [false])
+        XCTAssertEqual(viewModel.dataSource.map{$0.description}, ["10"])
     }
 
 }

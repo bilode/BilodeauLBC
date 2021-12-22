@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65CEF051277351FA00B09B66 /* FilterPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEF050277351FA00B09B66 /* FilterPicker.swift */; };
+		65CEF0532773BCBC00B09B66 /* SelfSizingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CEF0522773BCBC00B09B66 /* SelfSizingTableView.swift */; };
 		65EB6D88276CFB0B003DF010 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EB6D87276CFB0B003DF010 /* AppDelegate.swift */; };
 		65EB6D8A276CFB0B003DF010 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EB6D89276CFB0B003DF010 /* SceneDelegate.swift */; };
 		65EB6D8C276CFB0B003DF010 /* OffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EB6D8B276CFB0B003DF010 /* OffersViewController.swift */; };
 		65EB6D91276CFB0D003DF010 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65EB6D90276CFB0D003DF010 /* Assets.xcassets */; };
 		65EB6D94276CFB0D003DF010 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65EB6D92276CFB0D003DF010 /* LaunchScreen.storyboard */; };
 		65EB6D9F276CFB0E003DF010 /* TestBilodeauLBCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EB6D9E276CFB0E003DF010 /* TestBilodeauLBCTests.swift */; };
-		65EB6DA9276CFB0E003DF010 /* TestBilodeauLBCUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EB6DA8276CFB0E003DF010 /* TestBilodeauLBCUITests.swift */; };
-		65EB6DAB276CFB0E003DF010 /* TestBilodeauLBCUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EB6DAA276CFB0E003DF010 /* TestBilodeauLBCUITestsLaunchTests.swift */; };
 		65EB6DC9276D056F003DF010 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EB6DC7276D056F003DF010 /* Category.swift */; };
 		65EB6DCA276D056F003DF010 /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EB6DC8276D056F003DF010 /* Offer.swift */; };
 		65EB6DCE276D0576003DF010 /* OffersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EB6DCC276D0575003DF010 /* OffersRepository.swift */; };
@@ -42,16 +42,11 @@
 			remoteGlobalIDString = 65EB6D83276CFB0B003DF010;
 			remoteInfo = TestBilodeauLBC;
 		};
-		65EB6DA5276CFB0E003DF010 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65EB6D7C276CFB0B003DF010 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 65EB6D83276CFB0B003DF010;
-			remoteInfo = TestBilodeauLBC;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		65CEF050277351FA00B09B66 /* FilterPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPicker.swift; sourceTree = "<group>"; };
+		65CEF0522773BCBC00B09B66 /* SelfSizingTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizingTableView.swift; sourceTree = "<group>"; };
 		65EB6D84276CFB0B003DF010 /* TestBilodeauLBC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestBilodeauLBC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65EB6D87276CFB0B003DF010 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65EB6D89276CFB0B003DF010 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,9 +56,6 @@
 		65EB6D95276CFB0D003DF010 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65EB6D9A276CFB0E003DF010 /* TestBilodeauLBCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestBilodeauLBCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65EB6D9E276CFB0E003DF010 /* TestBilodeauLBCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBilodeauLBCTests.swift; sourceTree = "<group>"; };
-		65EB6DA4276CFB0E003DF010 /* TestBilodeauLBCUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestBilodeauLBCUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		65EB6DA8276CFB0E003DF010 /* TestBilodeauLBCUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBilodeauLBCUITests.swift; sourceTree = "<group>"; };
-		65EB6DAA276CFB0E003DF010 /* TestBilodeauLBCUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBilodeauLBCUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		65EB6DC7276D056F003DF010 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		65EB6DC8276D056F003DF010 /* Offer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
 		65EB6DCC276D0575003DF010 /* OffersRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffersRepository.swift; sourceTree = "<group>"; };
@@ -98,13 +90,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		65EB6DA1276CFB0E003DF010 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -113,7 +98,6 @@
 			children = (
 				65EB6D86276CFB0B003DF010 /* TestBilodeauLBC */,
 				65EB6D9D276CFB0E003DF010 /* TestBilodeauLBCTests */,
-				65EB6DA7276CFB0E003DF010 /* TestBilodeauLBCUITests */,
 				65EB6D85276CFB0B003DF010 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -123,7 +107,6 @@
 			children = (
 				65EB6D84276CFB0B003DF010 /* TestBilodeauLBC.app */,
 				65EB6D9A276CFB0E003DF010 /* TestBilodeauLBCTests.xctest */,
-				65EB6DA4276CFB0E003DF010 /* TestBilodeauLBCUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -146,6 +129,7 @@
 				65EB6D95276CFB0D003DF010 /* Info.plist */,
 				65EB6DE9277267ED003DF010 /* OfferCell.swift */,
 				65EB6DEB27726806003DF010 /* OfferCellData.swift */,
+				65CEF050277351FA00B09B66 /* FilterPicker.swift */,
 			);
 			path = TestBilodeauLBC;
 			sourceTree = "<group>";
@@ -158,15 +142,6 @@
 				65EB6D9E276CFB0E003DF010 /* TestBilodeauLBCTests.swift */,
 			);
 			path = TestBilodeauLBCTests;
-			sourceTree = "<group>";
-		};
-		65EB6DA7276CFB0E003DF010 /* TestBilodeauLBCUITests */ = {
-			isa = PBXGroup;
-			children = (
-				65EB6DA8276CFB0E003DF010 /* TestBilodeauLBCUITests.swift */,
-				65EB6DAA276CFB0E003DF010 /* TestBilodeauLBCUITestsLaunchTests.swift */,
-			);
-			path = TestBilodeauLBCUITests;
 			sourceTree = "<group>";
 		};
 		65EB6DC0276D0512003DF010 /* Services */ = {
@@ -185,6 +160,7 @@
 			children = (
 				65EB6DE1276D2515003DF010 /* URLSession+async.swift */,
 				65EB6DD9276D17EB003DF010 /* Dynamic.swift */,
+				65CEF0522773BCBC00B09B66 /* SelfSizingTableView.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -237,24 +213,6 @@
 			productReference = 65EB6D9A276CFB0E003DF010 /* TestBilodeauLBCTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		65EB6DA3276CFB0E003DF010 /* TestBilodeauLBCUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 65EB6DB4276CFB0E003DF010 /* Build configuration list for PBXNativeTarget "TestBilodeauLBCUITests" */;
-			buildPhases = (
-				65EB6DA0276CFB0E003DF010 /* Sources */,
-				65EB6DA1276CFB0E003DF010 /* Frameworks */,
-				65EB6DA2276CFB0E003DF010 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				65EB6DA6276CFB0E003DF010 /* PBXTargetDependency */,
-			);
-			name = TestBilodeauLBCUITests;
-			productName = TestBilodeauLBCUITests;
-			productReference = 65EB6DA4276CFB0E003DF010 /* TestBilodeauLBCUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -269,10 +227,6 @@
 						CreatedOnToolsVersion = 13.0;
 					};
 					65EB6D99276CFB0E003DF010 = {
-						CreatedOnToolsVersion = 13.0;
-						TestTargetID = 65EB6D83276CFB0B003DF010;
-					};
-					65EB6DA3276CFB0E003DF010 = {
 						CreatedOnToolsVersion = 13.0;
 						TestTargetID = 65EB6D83276CFB0B003DF010;
 					};
@@ -293,7 +247,6 @@
 			targets = (
 				65EB6D83276CFB0B003DF010 /* TestBilodeauLBC */,
 				65EB6D99276CFB0E003DF010 /* TestBilodeauLBCTests */,
-				65EB6DA3276CFB0E003DF010 /* TestBilodeauLBCUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -315,13 +268,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		65EB6DA2276CFB0E003DF010 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -334,6 +280,7 @@
 				65EB6DE2276D2515003DF010 /* URLSession+async.swift in Sources */,
 				65EB6DD2276D0C35003DF010 /* ImagesURL.swift in Sources */,
 				65EB6DDC276D1AFA003DF010 /* AppCoordinator.swift in Sources */,
+				65CEF0532773BCBC00B09B66 /* SelfSizingTableView.swift in Sources */,
 				65EB6D8C276CFB0B003DF010 /* OffersViewController.swift in Sources */,
 				65EB6DDE276D1ED5003DF010 /* OfferDetailsViewController.swift in Sources */,
 				65EB6DD4276D10C9003DF010 /* APIClient.swift in Sources */,
@@ -347,6 +294,7 @@
 				65EB6DDA276D17EB003DF010 /* Dynamic.swift in Sources */,
 				65EB6DC9276D056F003DF010 /* Category.swift in Sources */,
 				65EB6DCA276D056F003DF010 /* Offer.swift in Sources */,
+				65CEF051277351FA00B09B66 /* FilterPicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,15 +308,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		65EB6DA0276CFB0E003DF010 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				65EB6DA9276CFB0E003DF010 /* TestBilodeauLBCUITests.swift in Sources */,
-				65EB6DAB276CFB0E003DF010 /* TestBilodeauLBCUITestsLaunchTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -376,11 +315,6 @@
 			isa = PBXTargetDependency;
 			target = 65EB6D83276CFB0B003DF010 /* TestBilodeauLBC */;
 			targetProxy = 65EB6D9B276CFB0E003DF010 /* PBXContainerItemProxy */;
-		};
-		65EB6DA6276CFB0E003DF010 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 65EB6D83276CFB0B003DF010 /* TestBilodeauLBC */;
-			targetProxy = 65EB6DA5276CFB0E003DF010 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -618,52 +552,6 @@
 			};
 			name = Release;
 		};
-		65EB6DB5276CFB0E003DF010 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = M4S5UFSR3N;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.timothee.TestBilodeauLBCUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = TestBilodeauLBC;
-			};
-			name = Debug;
-		};
-		65EB6DB6276CFB0E003DF010 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = M4S5UFSR3N;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.timothee.TestBilodeauLBCUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = TestBilodeauLBC;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -690,15 +578,6 @@
 			buildConfigurations = (
 				65EB6DB2276CFB0E003DF010 /* Debug */,
 				65EB6DB3276CFB0E003DF010 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		65EB6DB4276CFB0E003DF010 /* Build configuration list for PBXNativeTarget "TestBilodeauLBCUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				65EB6DB5276CFB0E003DF010 /* Debug */,
-				65EB6DB6276CFB0E003DF010 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
