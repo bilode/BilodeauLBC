@@ -6,16 +6,69 @@
 //
 
 import Foundation
+import Combine
 
-class APIClient {
+protocol Requestable {
+    func make<T: Decodable>(
+        _ request: URLRequest,
+        _ decoder: JSONDecoder
+    ) -> AnyPublisher<T, Error>
+}
+
+struct APIClient: Requestable {
     
-    func fetchOffers(_ completion: @escaping (Result<Data, Error>) -> Void) {
+    enum ClientError: Error {
+        case unknown
+        case statusCode(Int)
+        case invalidURL
+        case underlying(Error)
+    }
+    
+    func make<T: Decodable>(
+        _ request: URLRequest,
+        _ decoder: JSONDecoder
+    ) -> AnyPublisher<T, Error> {
+        URLSession.shared
+            .dataTaskPublisher(for: request)
+            .tryMap { response in
+                
+                let httpURLResponse = response.response as? HTTPURLResponse
+                
+                guard httpURLResponse?.statusCode == 200 else {
+                    throw httpURLResponse != nil ?
+                    ClientError.statusCode(httpURLResponse!.statusCode) :
+                    ClientError.unknown
+                }
+                
+                return response.data
+            }
+            .decode(type: T.self, decoder: decoder)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    
+    static func downloadImage(url: String) -> AnyPublisher<Data, Error> {
         
-        let url = URL(string: "https://raw.githubusercontent.com/leboncoin/paperclip/master/listing.json")!
+        guard let url = URL(string: url) else {
+            return Fail(error: ClientError.invalidURL)
+                .eraseToAnyPublisher()
+        }
         
-        URLSession.shared.dataTask(with: url) { data, response, error in
-//            let decoded = try! JSONDecoder().decode(Offer.self, from: data!)
-            completion(.success(data!))
-        }.resume()
+        return URLSession.shared.dataTaskPublisher(for: url)
+            .tryMap { response -> Data in
+                
+                let httpURLResponse = response.response as? HTTPURLResponse
+                
+                guard httpURLResponse?.statusCode == 200 else {
+                    throw httpURLResponse != nil ?
+                    ClientError.statusCode(httpURLResponse!.statusCode) :
+                    ClientError.unknown
+                }
+                
+                return response.data
+            }
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
     }
 }

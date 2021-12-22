@@ -47,4 +47,14 @@ struct Offer: Decodable {
         self.imagesURL = try container.decode(ImagesURL.self, forKey: .imagesURL)
         self.price = try container.decode(Double.self, forKey: .price)
     }
+    
+    init(categoryID: Int64, creationDate: Date, description: String, isUrgent: Bool) {
+        self.id = 0
+        self.categoryId = categoryID
+        self.creationDate = creationDate
+        self.description = description
+        self.isUrgent = isUrgent
+        self.imagesURL = ImagesURL(small: nil, thumb: nil)
+        self.price = 0
+    }
 }

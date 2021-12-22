@@ -8,4 +8,9 @@
 struct Category: Decodable {
     let id: Int64
     let name: String
+    
+    init(id: Int64, name: String) {
+        self.id = id
+        self.name = name
+    }
 }

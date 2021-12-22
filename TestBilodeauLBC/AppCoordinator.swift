@@ -19,12 +19,13 @@ class AppCoordinator {
     func start() {
         self.presentOffersViewController()
     }
+    
 }
 
 extension AppCoordinator: OffersViewControllerDelegate {
 
     private func presentOffersViewController() {
-        let vc = OffersViewController(with: OffersViewModel(with: OffersRepository(apiClient: APIClient())))
+        let vc = OffersViewController(with: OffersViewModel())
         
         self.navigationController.pushViewController(vc, animated: false)
     }

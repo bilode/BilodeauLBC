@@ -6,32 +6,14 @@
 //
 
 import Foundation
+import Combine
 
-class OffersRepository {
+struct OffersRepository {
     
-    let apiClient: APIClient
+    let apiClient: Requestable
+    private let url = URL(string: "https://raw.githubusercontent.com/leboncoin/paperclip/master/listing.json")!
     
-    init(apiClient: APIClient) {
-        self.apiClient = apiClient
-    }
-    
-    func getOffers() -> [Offer] {
-        
-        self.apiClient.fetchOffers { result in
-            
-            switch result {
-            case .success(let data):
-                print(data)
-                let offers = try! JSONDecoder().decode([Offer].self, from: data)
-                
-                
-                print("phiew")
-                
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-        
-        return []
+    func getOffers() -> AnyPublisher<[Offer], Error> {
+        return apiClient.make(URLRequest(url: self.url), JSONDecoder())
     }
 }
