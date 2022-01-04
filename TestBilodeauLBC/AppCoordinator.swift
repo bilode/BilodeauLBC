@@ -42,6 +42,7 @@ extension AppCoordinator: OffersViewControllerDelegate {
 extension AppCoordinator: OfferDetailsViewControllerDelegate {
     
     private func presentOfferDetails(withModel model: OfferDetailsViewModel) {
+        
         let vc = OfferDetailsViewController(with: model)
         vc.delegate = self
         

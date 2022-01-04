@@ -20,7 +20,12 @@ class OffersViewController: UIViewController {
     
     private var subscriptions = Set<AnyCancellable>()
     
-    private var filterPickerData: FilterPickerData?
+    private var filterPickerData: FilterPickerVCData?
+    
+    private struct Const {
+        static let visibleCellsRegular = (col: 3.0, lines: 2.7)
+        static let visibleCellsNonRegular = (col: 2.0, lines: 2.2)
+    }
     
     // MARK: - Views
     
@@ -130,7 +135,6 @@ class OffersViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.view.backgroundColor = .white
-        self.overrideUserInterfaceStyle = .light
     }
     
     required init?(coder: NSCoder) {
@@ -154,7 +158,7 @@ class OffersViewController: UIViewController {
     private func bind() {
         
         self.viewModel.$categories.sink { categories in
-            self.filterPickerData = FilterPickerData(categories: categories)
+            self.filterPickerData = FilterPickerVCData(categories: categories)
         }.store(in: &self.subscriptions)
         
         self.viewModel.$dataSource.sink { [weak self] offers in
@@ -259,7 +263,7 @@ class OffersViewController: UIViewController {
             return
         }
                 
-        let vc = FilterPicker(with: filterPickerData)
+        let vc = FilterPickerVC(with: filterPickerData)
         
         vc.delegate = self
         vc.modalPresentationStyle = .overFullScreen
@@ -279,7 +283,7 @@ class OffersViewController: UIViewController {
 
 // MARK: - FilterPickerDelegate
 
-extension OffersViewController: FilterPickerDelegate {
+extension OffersViewController: FilterPickerVCDelegate {
     
     func didPickCategory(_ category: Category?) {
         
@@ -315,10 +319,20 @@ extension OffersViewController: UICollectionViewDelegateFlowLayout, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        let width = (collectionView.bounds.width - 30) / 2
         
-        return CGSize(width: width, height: 300.0)
+        let visibleColumns = self.traitCollection.horizontalSizeClass == .regular ?
+        Const.visibleCellsRegular.col :
+        Const.visibleCellsNonRegular.col
+        
+        let width = (collectionView.bounds.width - (10 * (floor(visibleColumns) + 1))) / floor(visibleColumns)
+        
+        let visibleLines = self.traitCollection.horizontalSizeClass == .regular ?
+        Const.visibleCellsRegular.lines :
+        Const.visibleCellsNonRegular.lines
+        
+        let height = (self.offersCollectionView.bounds.height - (10 * (floor(visibleLines) + 1))) / visibleLines
+        
+        return CGSize(width: width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

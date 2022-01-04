@@ -29,7 +29,7 @@ struct Offer: Decodable {
     
     private static let formatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         return formatter
     }()
     
@@ -48,6 +48,7 @@ struct Offer: Decodable {
         self.price = try container.decode(Double.self, forKey: .price)
     }
     
+    // Only for testing purpose
     init(categoryID: Int64, creationDate: Date, description: String, isUrgent: Bool) {
         self.id = 0
         self.categoryId = categoryID

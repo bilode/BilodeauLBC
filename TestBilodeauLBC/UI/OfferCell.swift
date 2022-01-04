@@ -41,6 +41,8 @@ class OfferCell: UICollectionViewCell {
         imageView.layer.cornerRadius = 10
         imageView.layer.masksToBounds = true
         
+        imageView.contentMode = .scaleAspectFill
+        
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -51,6 +53,9 @@ class OfferCell: UICollectionViewCell {
         label.numberOfLines = 0
         label.textAlignment = .natural
         
+        label.font = .preferredFont(forTextStyle: .body)
+        label.adjustsFontForContentSizeCategory = true
+        
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -59,7 +64,8 @@ class OfferCell: UICollectionViewCell {
         let label = UILabel()
         
         label.textAlignment = .natural
-        label.font = .boldSystemFont(ofSize: 15.0)
+        label.font = .preferredFont(forTextStyle: .headline)
+        label.adjustsFontForContentSizeCategory = true
         
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -70,6 +76,9 @@ class OfferCell: UICollectionViewCell {
         
         label.textAlignment = .natural
         
+        label.font = .preferredFont(forTextStyle: .body)
+        label.adjustsFontForContentSizeCategory = true
+        
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -78,7 +87,8 @@ class OfferCell: UICollectionViewCell {
         let label = UILabel()
         
         label.textColor = .red
-        label.font = .boldSystemFont(ofSize: 15.0)
+        label.font = .preferredFont(forTextStyle: .subheadline)
+        label.adjustsFontForContentSizeCategory = true
         label.text = "Urgent"
         label.textAlignment = .center
         label.backgroundColor = .white
@@ -133,8 +143,7 @@ class OfferCell: UICollectionViewCell {
             self.categoryLabel.topAnchor.constraint(equalTo: self.priceLabel.bottomAnchor),
             self.categoryLabel.widthAnchor.constraint(equalTo: self.widthAnchor),
             self.categoryLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            // Ugly but greaterThanOrEqual doesn't seem to work and I couldn't figure out why
-            self.categoryLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            self.categoryLabel.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor)
         ])
         
         NSLayoutConstraint.activate([
@@ -155,8 +164,8 @@ class OfferCell: UICollectionViewCell {
         
         self.imageView.image = UIImage(named: "placeholder")
         
-        if let thumbURL = data.thumbURL {
-            APIClient.downloadImage(url: thumbURL).sink { _ in
+        if let smallURL = data.smallURL {
+            APIClient.downloadImage(url: smallURL).sink { _ in
                 
             } receiveValue: { [weak self] data in
                 self?.imageView.image = UIImage(data: data)

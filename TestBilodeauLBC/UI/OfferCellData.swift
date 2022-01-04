@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 struct OfferCellData {
-    let thumbURL: String?
+    let smallURL: String?
     let description: String
     let price: String
     let category: String

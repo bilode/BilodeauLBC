@@ -7,21 +7,21 @@
 
 import UIKit
 
-protocol FilterPickerDelegate: AnyObject {
+protocol FilterPickerVCDelegate: AnyObject {
     func didPickCategory(_: Category?)
 }
 
-struct FilterPickerData {
+struct FilterPickerVCData {
     let categories: [Category]
 }
 
 
-class FilterPicker: UIViewController {
+class FilterPickerVC: UIViewController {
     
     var maskView: UIView?
-    var data: FilterPickerData
+    var data: FilterPickerVCData
     
-    weak var delegate: FilterPickerDelegate?
+    weak var delegate: FilterPickerVCDelegate?
     
     // MARK: - Views
     
@@ -80,13 +80,12 @@ class FilterPicker: UIViewController {
     
     // MARK: - Initializers
     
-    init(with data: FilterPickerData) {
+    init(with data: FilterPickerVCData) {
         self.data = data
         
         super.init(nibName: nil, bundle: nil)
         
         self.transitioningDelegate = self
-        self.overrideUserInterfaceStyle = .light
     }
     
     required init?(coder: NSCoder) {
@@ -132,7 +131,7 @@ class FilterPicker: UIViewController {
 
 // MARK: - UIViewControllerTransitioningDelegate
 
-extension FilterPicker: UIViewControllerTransitioningDelegate {
+extension FilterPickerVC: UIViewControllerTransitioningDelegate {
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         let mask = UIView(frame: presenting.view.bounds)
@@ -165,7 +164,7 @@ extension FilterPicker: UIViewControllerTransitioningDelegate {
     }
 }
 
-extension FilterPicker: UITableViewDataSource, UITableViewDelegate {
+extension FilterPickerVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.data.categories.count

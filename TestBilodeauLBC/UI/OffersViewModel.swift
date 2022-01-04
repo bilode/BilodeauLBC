@@ -152,7 +152,7 @@ class OffersViewModel: ObservableObject {
         let offer = self.dataSource[index]
         let offerCategory = self.categories.first { $0.id == offer.categoryId }
         
-        return OfferCellData(thumbURL: offer.imagesURL.thumb,
+        return OfferCellData(smallURL: offer.imagesURL.small,
                              description: offer.description,
                              price: String(format: "%.2f €", offer.price),
                              category: offerCategory?.name ?? "",
